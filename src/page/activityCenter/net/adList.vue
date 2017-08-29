@@ -104,8 +104,8 @@
   </el-row>
 </template>
 <script>
-  import util from '../../common/util'
-  import {reqGetBookListPage, reqDeleteBook, reqEditBook, reqBatchDeleteBook, reqAddBook} from '../../api/api';
+  import util from '../../../common/util'
+  import {reqGetBookListPage, reqDeleteBook, reqEditBook, reqBatchDeleteBook, reqAddBook} from '../../../api/api';
 
   export default{
     data(){
