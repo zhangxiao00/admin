@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="34af46f2-7370-494c-bc6b-bb8160e7534f" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/assets/logo.png" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/book/list.vue" afterPath="$PROJECT_DIR$/src/page/activityCenter/net/adList.vue" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/bookcategory/list.vue" afterPath="$PROJECT_DIR$/src/page/bookcategory/list.vue" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/user/changepwd.vue" afterPath="$PROJECT_DIR$/src/page/user/changepwd.vue" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/user/list.vue" afterPath="$PROJECT_DIR$/src/page/user/list.vue" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/user/profile.vue" afterPath="$PROJECT_DIR$/src/page/user/profile.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/App.vue" afterPath="$PROJECT_DIR$/src/App.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assets/iconfont.css" afterPath="$PROJECT_DIR$/src/assets/iconfont.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Home.vue" afterPath="$PROJECT_DIR$/src/components/Home.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Login.vue" afterPath="$PROJECT_DIR$/src/components/Login.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/router/index.js" afterPath="$PROJECT_DIR$/src/router/index.js" />
-    </list>
+    <list default="true" id="34af46f2-7370-494c-bc6b-bb8160e7534f" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -358,12 +346,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1503576048422</updated>
-      <workItem from="1503576050051" duration="50331000" />
+      <workItem from="1503576050051" duration="50434000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50331000" />
+    <option name="totallyTimeSpent" value="50434000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
