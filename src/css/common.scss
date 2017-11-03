@@ -110,3 +110,10 @@ html,body{
 .animation_opactiy{
   animation: backOpacity 2s ease-in-out infinite;
 }
+
+/******************************************************chenge ele***************************************************/
+//面包屑－default 没有点击样式
+.el-breadcrumb__item.default .el-breadcrumb__item__inner, .el-breadcrumb__item__inner a {
+  color: #97a8be;
+  cursor: text;
+}

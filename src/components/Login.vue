@@ -51,7 +51,6 @@
               this.logining = false;
               //NProgress.done();
               let { msg, code, user } = data;
-              user.name = '张三'
               if (code !== 200) {
                 this.$message({
                   message: msg,

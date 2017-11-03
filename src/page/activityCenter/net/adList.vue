@@ -3,7 +3,8 @@
     <el-col :span="24" class="warp-breadcrum">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/' }"><b>首页</b></el-breadcrumb-item>
-        <el-breadcrumb-item>图书管理</el-breadcrumb-item>
+        <el-breadcrumb-item class="default">活动中心</el-breadcrumb-item>
+        <el-breadcrumb-item class="default">.net</el-breadcrumb-item>
         <el-breadcrumb-item>图书列表</el-breadcrumb-item>
       </el-breadcrumb>
     </el-col>
@@ -57,6 +58,7 @@
         </el-pagination>
       </el-col>
 
+      <!--编辑界面-->
       <el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false">
         <el-form :model="editForm" label-width="100px" :rules="editFormRules" ref="editForm">
           <el-form-item label="书名" prop="name">

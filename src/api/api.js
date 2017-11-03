@@ -1,6 +1,3 @@
-/**
- * Created by jerry on 2017/4/13.
- */
 import axios from 'axios'
 
 let base = ''
@@ -20,3 +17,9 @@ export const reqEditBook = params => { return axios.get(`${base}/book/edit`, { p
 export const reqBatchDeleteBook = params => { return axios.get(`${base}/book/batchdelete`, { params: params }) }
 
 export const reqAddBook = params => { return axios.get(`${base}/book/add`, { params: params }) }
+
+export const leftMenu = () => { return axios.get('http://192.168.9.101:8080/emro_boss/staff/auth') }
+
+
+
+

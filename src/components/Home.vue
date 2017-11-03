@@ -5,11 +5,11 @@
       <div class="topbar-logo">
         <!--<a href="/"><img src="../assets/logo.png" style="width:42px;margin-top: 5px;"></a>-->
       </div>
-      <div class="topbar-title">
+      <div class="topbar-title" :class="collapsed?'topbar-title-collapsed':'topbar-title-expanded'">
         <span>test</span>
       </div>
 
-      <div class="menu-toggle" @click.prevent="collapse" style="display: inline;">
+      <div class="menu-toggle" @click.prevent="collapse">
         <i class="iconfont icon-menuon" v-show="!collapsed"></i>
         <i class="iconfont icon-menuon1" v-show="collapsed"></i>
       </div>
@@ -43,20 +43,20 @@
         <!--展开折叠开关-->
         <el-menu class="el-menu-vertical" :collapse="collapsed" router>
           <el-menu-item index="/dashboard" class="el-submenu__title">
-              <i class="el-icon-message"></i>
-              <span slot="title">首页</span>
+              <i class="iconfont icon-homepage_fill" style="float: left;"></i>
+              <span slot="title" class="first">首页</span>
           </el-menu-item>
           <el-submenu v-if="one.children&&one.menuShow" :index="one.name" v-for="(one,index) in $router.options.routes" :key="index">
             <template slot="title">
-              <i class="el-icon-message"></i>
-              <span slot="title" class="elip">{{one.name}}</span>
+              <i :class="one.iconCls"></i>
+              <span slot="title" class="elip first">{{one.name}}</span>
             </template>
             <div v-for="(two,index) in one.children" :key="index" v-if="two.menuShow">
-              <el-submenu v-if="two.children" :index="two.name">
-                <span slot="title" class="elip">{{two.name}}</span>
-                <el-menu-item :index="three.path" v-for="(three,index) in two.children" :key="index" v-if="three.menuShow" class="elip el-submenu__title">{{three.name}}</el-menu-item>
+              <el-submenu v-if="two.parent" :index="two.parent">
+                <span slot="title" class="elip">{{two.parent}}</span>
+                <el-menu-item :index="two.path" class="elip el-submenu__title">{{two.name}}</el-menu-item>
               </el-submenu>
-              <el-menu-item v-if="!two.children" :index="two.path" class="elip el-submenu__title">{{two.name}}</el-menu-item>
+              <el-menu-item v-if="!two.parent" :index="two.path" class="elip el-submenu__title">{{two.name}}</el-menu-item>
             </div>
           </el-submenu>
 
@@ -111,14 +111,14 @@
       </aside>
 
       <!--右侧内容区-->
-      <section class="content-container">
-        <div class="grid-content bg-purple-light">
-          <el-col :span="24" class="content-wrapper">
+      <section class="content-container" :class="collapsed?'content-collapsed':'content-expanded'">
+        <!--<div class="grid-content bg-purple-light">-->
+          <!--<el-col :span="24" class="content-wrapper">-->
             <transition name="fade" mode="out-in">
               <router-view></router-view>
             </transition>
-          </el-col>
-        </div>
+          <!--</el-col>-->
+        <!--</div>-->
       </section>
     </el-col>
   <!--底部-->
@@ -185,7 +185,6 @@
   }
 </script>
 
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
   @import '.././css/style.scss';
@@ -217,27 +216,39 @@
     .topbar-title {
       float: left;
       text-align: center;
-      width: 200px;
-      color: #eee;
+      color: #ccc;
+      transition: all 0.3s;
       /*border-right: 1px solid #000;*/
     }
-      .topbar-account {
-        float: right;
-        padding-right: 20px;
-        height:50px;
-        .el-dropdown-link {
-          height: 50px;
-          display: flex;
-          align-items:center;
-          color: #ccc;
-          cursor: pointer;
-        &:hover {color: #fff;text-shadow: 0 0 1px #eee;}
-        span {margin: 0 5px 0 2px;}
-        .icon-mine_fill{font-size: 40px;}
-        }
-      }
-
+    .topbar-title-collapsed{width: 64px;}
+    .topbar-title-expanded{width: 220px;}
+    .menu-toggle {
+      float: left;
+      color: #ccc;
+      cursor: pointer;
+      padding:0 20px;
+      &:hover {color:#fff;}
+      .iconfont{font-size: 20px;}
     }
+
+    /*右上角*/
+    .topbar-account {
+      float: right;
+      padding-right: 20px;
+      height:50px;
+      .el-dropdown-link {
+        height: 50px;
+        display: flex;
+        align-items:center;
+        color: #ccc;
+        cursor: pointer;
+      &:hover {color: #fff;text-shadow: 0 0 1px #eee;}
+      span {margin: 0 5px 0 2px;}
+      .icon-mine_fill{font-size: 40px;}
+      }
+    }
+
+  }
   .main {
     display: flex;
     position: absolute;
@@ -247,27 +258,32 @@
     background: $dblack;
   }
   /*menu*/
-  aside.menu-expanded {overflow-y:auto;}
+  aside {overflow-y:auto;width: 100%;}
   aside {
-    padding: 10px 0;
+    margin-top: 10px;
     background:$dblack;
     .el-menu-vertical:not(.el-menu--collapse) {
-      width: 200px;
+      width: 220px;
+    }
+    .el-menu-vertical.el-menu--collapse {
+      /*width: 64px;*/
     }
     .el-menu-vertical{
       border-radius: 0;
       background: $dblack;
-
     }
-
   }
+    .content-collapsed{margin-left: calc(-100% + 64px);}
+    .content-expanded{margin-left: calc(-100% + 220px);}
     .content-container {
       background: $bc;
       border-radius: 10px 0 0 0;
       flex: 1;
       overflow-y: auto;
       padding: 10px;
-
+      /*margin-left:-20px;*/
+      transition: margin 0.3s;
+      z-index:2;
       .content-wrapper {
         /*background-color: $bc;*/
         box-sizing: border-box;
@@ -282,24 +298,22 @@
   .el-submenu .el-menu-item:hover, .el-submenu__title:hover,
   .el-menu--horizontal.el-menu--dark .el-submenu .el-menu-item.is-active, .el-menu-item.is-active
   {background-color: #00C1DE;color: #1F2D3D;}
-  /*.el-submenu .el-menu-item {*/
-    /*!*background-color: $dblack;*!*/
-  /*}*/
-  /*.el-submenu .el-menu-item:hover {*/
-    /*!*background-color: $black;*!*/
-  /*}*/
-  /*.el-submenu .el-menu-item.is-active, .el-menu-item.is-active,*/
-  /*.el-submenu .el-menu-item.is-active:hover, .el-menu-item.is-active:hover {*/
-    /*!*background-color: #00C1DE;*!*/
-    /*!*color: #fff;*!*/
-  /*}*/
+  .el-submenu span {padding-right: 12px;}
+  .menu-collapsed .el-submenu__icon-arrow {display: none;}
+  .menu-collapsed .first {display: none;}
+  /*.el-submenu__icon-arrow {right: 40px;}*/
+  /*******************************************************iconset********************************************************/
+  .el-submenu div.el-submenu__title {display: flex;}
   .el-menu .iconfont{
+    font-size: 24px;
     vertical-align: baseline;
     margin-right: 6px;
   }
+  /*系统中心*/
+  /*******************************************************iconset end********************************************************/
 
   .warp-breadcrum{
-    padding: 10px 0px;
+    padding: 5px 0 15px 0px;
     border-bottom: 1px solid #efefef;
   }
   .warp-main{
