@@ -41,7 +41,7 @@ let routes = [
       menuShow: false,
       iconCls: 'iconfont icon-home', // 图标样式class
       children: [
-        {path: '/dashboard', component: Dashboard, name: '首页', menuShow: true}
+        {path: '/dashboard', component: Dashboard, name: '首页2', menuShow: true}
       ]
     },
     {
@@ -71,15 +71,7 @@ let routes = [
           parent:'.net',
 
         },
-        {path: '/bookcategory/list', component: BookCategoryList, name: '图书分类', menuShow: true},
-        {
-            path: '/',
-            component: Home,
-            name: '123',
-            menuShow: true,
-            // iconCls: 'iconfont icon-books',
-            parent:'.net',
-        },
+        {path: '/bookcategory/list', component: BookCategoryList, name: '图书分类', menuShow: true}
       ]
     },
     {

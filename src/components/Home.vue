@@ -60,6 +60,43 @@
             </div>
           </el-submenu>
 
+          <template v-for="(one, oneIdx) in menuData">
+            <template v-if="one.child.length>0">
+              <el-submenu :index="(oneIdx)+''" class="">
+                <template slot="title">
+                  <i class="iconfont icon-manage_fill"></i>
+                  <span>{{one.authName}}</span>
+                </template>
+                <template v-for="(two, twoIdx) in one.child" >
+                  <template v-if="two.child && two.child.length > 0">
+                    <el-submenu :index="(oneIdx)+'-'+twoIdx">
+                      <template slot="title">{{two.authName}}</template>
+                      <template v-for="(three, treeIdx) in two.child">
+                        <el-menu-item :index="(oneIdx)+'-'+twoIdx+'-'+treeIdx" @click="linkTo(three.path)">
+                          {{three.authName}}
+                        </el-menu-item>
+                      </template>
+                    </el-submenu>
+                  </template>
+                  <template v-else="">
+                    <el-menu-item-group>
+                      <el-menu-item :index="(oneIdx)+'-'+twoIdx" @click="linkTo(two.path)">{{two.authName}}</el-menu-item>
+                    </el-menu-item-group>
+                  </template>
+                </template>
+              </el-submenu >
+            </template>
+            <template v-else="">
+              <el-menu-item  :index="(oneIdx)+''" @click="linkTo(one.path)"  class="el-submenu__title">
+                <i class="iconfont icon-homepage_fill"></i>
+                <span slot="title">
+                  {{one.authName}}
+                </span>
+              </el-menu-item>
+            </template>
+          </template>
+
+
         </el-menu>
 
         <!--菜单展开时的显示情况-->
@@ -130,18 +167,25 @@
 
 <script>
   import { bus } from '../bus.js'
+  import {leftMenu, menuTreeData} from '../api/api'
+
   export default {
     name: 'home',
     created(){
+      let _this = this;
       bus.$on('setUserName', (text) => {
         this.sysUserName = text;
-      })
+      });
+      menuTreeData().then((response)=>{
+        _this.menuData = response.data;
+      });
     },
     data () {
       return {
         sysUserName: '',
         sysUserAvatar: '',
         collapsed: false,
+        menuData: []
       }
     },
     methods: {
@@ -173,6 +217,14 @@
         }).catch(() => {
 
         });
+      },
+      linkTo(path){
+//        if(path === 'index'){
+//          this.$router.push({path: '/page/index'});
+//        }else{
+//          this.$router.push({path: path});
+//        }
+
       }
     },
     mounted() {
@@ -181,6 +233,7 @@
         user = JSON.parse(user);
         this.sysUserName = user.name || '';
       }
+
     }
   }
 </script>
