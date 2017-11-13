@@ -41,7 +41,7 @@
       <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
 
         <!--展开折叠开关-->
-        <el-menu class="el-menu-vertical" :collapse="collapsed" router>
+        <el-menu class="el-menu-vertical" :default-active="$route.path" :collapse="collapsed" router>
           <el-menu-item index="/dashboard" class="el-submenu__title">
               <i class="iconfont icon-homepage_fill" style="float: left;"></i>
               <span slot="title" class="first">首页</span>
@@ -60,9 +60,9 @@
             </div>
           </el-submenu>
 
-          <template v-for="(one, oneIdx) in menuData">
+          <!-- <template v-for="(one, oneIdx) in menuData">
             <template v-if="one.child.length>0">
-              <el-submenu :index="(oneIdx)+''" class="">
+              <el-submenu :index="oneIdx+''" class="">
                 <template slot="title">
                   <i class="iconfont icon-manage_fill"></i>
                   <span>{{one.authName}}</span>
@@ -78,7 +78,7 @@
                       </template>
                     </el-submenu>
                   </template>
-                  <template v-else="">
+                  <template v-else>
                     <el-menu-item-group>
                       <el-menu-item :index="(oneIdx)+'-'+twoIdx" @click="linkTo(two.path)">{{two.authName}}</el-menu-item>
                     </el-menu-item-group>
@@ -86,7 +86,7 @@
                 </template>
               </el-submenu >
             </template>
-            <template v-else="">
+            <template v-else>
               <el-menu-item  :index="(oneIdx)+''" @click="linkTo(one.path)"  class="el-submenu__title">
                 <i class="iconfont icon-homepage_fill"></i>
                 <span slot="title">
@@ -94,57 +94,10 @@
                 </span>
               </el-menu-item>
             </template>
-          </template>
+          </template> -->
 
 
         </el-menu>
-
-        <!--菜单展开时的显示情况-->
-        <!--<el-menu v-if="!collapsed" default-active="0" @open="handleOpen" @close="handleClose" router>-->
-          <!--<template v-for="(item,index) in $router.options.routes" v-if="item.menuShow">-->
-
-            <!--<el-submenu :index="index+''">-->
-              <!--<span slot="title"><i :class="item.iconCls"></i>{{item.name}}</span>-->
-              <!--<el-menu-item v-for="term in item.children" :key="term.path" :index="term.path" v-if="term.menuShow">-->
-                <!--&lt;!&ndash;{{term.name}}&ndash;&gt;-->
-
-                <!--<el-submenu v-if="term.children" :index="index+''">-->
-                  <!--<span slot="title"><i :class="term.iconCls"></i>{{term.name}}</span>-->
-                  <!--<el-menu-item v-for="one in term.children" :key="one.path" :index="one.path" v-if="one.menuShow">-->
-                    <!--&lt;!&ndash;{{term.name}}&ndash;&gt;-->
-                    <!--{{one.name}}-->
-                  <!--</el-menu-item>-->
-                <!--</el-submenu>-->
-                <!--<el-menu-item v-else-if="!term.children" :index="term.path" class="el-submenu__title">-->
-                  <!--<i :class="term.iconCls"></i>{{term.name}}-->
-                <!--</el-menu-item>-->
-
-
-
-              <!--</el-menu-item>-->
-            <!--</el-submenu>-->
-            <!--&lt;!&ndash;<el-menu-item v-else-if="!item.children" :index="item.path" class="el-submenu__title">&ndash;&gt;-->
-              <!--&lt;!&ndash;<i :class="item.iconCls"></i>{{item.name}}&ndash;&gt;-->
-            <!--&lt;!&ndash;</el-menu-item>&ndash;&gt;-->
-          <!--</template>-->
-        <!--</el-menu>-->
-
-        <!--&lt;!&ndash;菜单折叠后的显示情况&ndash;&gt;-->
-        <!--<ul v-else class="el-menu collapsed" ref="menuCollapsed">-->
-          <!--<template v-for="(item,index) in $router.options.routes" v-if="item.menuShow">-->
-            <!--<li v-if="!item.leaf" :index="index+''" style="position: relative;">-->
-              <!--<div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)"><i :class="item.iconCls"></i></div>-->
-              <!--<ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">-->
-                <!--<li v-for="term in item.children" :key="term.path" v-if="term.menuShow" class="el-menu-item" style="padding-left: 40px;" :class="$route.path==term.path?'is-active':''"-->
-                    <!--@click="$router.push(term.path)">{{term.name}}</li>-->
-              <!--</ul>-->
-            <!--</li>-->
-            <!--<li v-else-if="item.leaf&&item.children&&item.children.length" class="el-menu-item el-submenu__title" :class="$route.path==item.children[0].path?'is-active':''" @click="$router.push(item.children[0].path)">-->
-              <!--<i :class="item.iconCls"></i>-->
-            <!--</li>-->
-          <!--</template>-->
-        <!--</ul>-->
-
       </aside>
 
       <!--右侧内容区-->
@@ -167,18 +120,18 @@
 
 <script>
   import { bus } from '../bus.js'
-  import {leftMenu, menuTreeData} from '../api/api'
+  // import {leftMenu, menuTreeData} from '../api/api'
 
   export default {
     name: 'home',
     created(){
-      let _this = this;
+      // let _this = this;
       bus.$on('setUserName', (text) => {
         this.sysUserName = text;
       });
-      menuTreeData().then((response)=>{
-        _this.menuData = response.data;
-      });
+      // menuTreeData().then((response) => {
+      //   this.menuData = [...response.data];
+      // });
     },
     data () {
       return {
@@ -219,11 +172,11 @@
         });
       },
       linkTo(path){
-//        if(path === 'index'){
-//          this.$router.push({path: '/page/index'});
-//        }else{
-//          this.$router.push({path: path});
-//        }
+       if(path === 'index'){
+         this.$router.push({path: '/page/index'});
+       }else{
+         this.$router.push({path: path});
+       }
 
       }
     },

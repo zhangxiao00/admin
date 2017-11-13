@@ -22,7 +22,7 @@ export const reqAddBook = params => { return axios.get(`${base}/book/add`, { par
 
 export const leftMenu = () => { return axios.get('http://192.168.9.101:8080/emro_boss/staff/auth') }
 
-export const menuTreeData = () => { return instance.get('http://192.168.9.78:8080/emro_boss/loginmenu/getMenuTreeData') }
+// export const menuTreeData = () => { return instance.get('http://192.168.9.78:8080/emro_boss/loginmenu/getMenuTreeData') }
 
 
 
