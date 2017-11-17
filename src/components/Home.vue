@@ -40,6 +40,7 @@
                  :collapse="collapsed"
                  :unique-opened="true"
                  @open="handleOpen"
+                 @close="handleClose"
                  @select="selectMenu"
                  router>
           <template v-for="(one,one_index) in menuData">
@@ -102,6 +103,7 @@
         sysUserName: '',
         sysUserAvatar: '',
         collapsed: false,
+        opened_menu : [],
         menuData: [
                     {
                         "child": [],
@@ -670,7 +672,7 @@
                             {
                                 "child": [],
                                 "authName": "首单",
-                                "path": "",
+                                "path": "/shoudan",
                                 "iconCls": "iconfont icon-setup_fill"
                             },
                             {
@@ -1018,7 +1020,7 @@
                             {
                                 "child": [],
                                 "authName": ".Net",
-                                "path": "",
+                                "path": "/abc",
                                 "iconCls": "iconfont icon-setup_fill"
                             },
                             {
@@ -1346,32 +1348,63 @@
       },
 
       handleOpen(key,keyPath) {
-    //    console.log(key,keyPath);
+        // console.log(key,keyPath);
+        // this.$refs.mymenu.open('8-0');
       },
-      handleClose() {
+      handleClose(key,keyPath) {
+        // console.log(key,'///////',keyPath)
 //        console.log('handleclose');
+        // console.log(this.opened_menu,'666');
+        let i = this.opened_menu.findIndex(v => v === key);
+        // console.log(i);
+        for(i;i<this.opened_menu.length;i++){
+            // console.log(this.opened_menu[i]);
+            this.$refs.mymenu.close(this.opened_menu[i]);
+        }
+        // this.$refs.mymenu.close();
       },
       _click (param){
         // console.log(param);
       },
       selectMenu(index, indexPath){
         //   console.log(this.$refs.mymenu.openedMenus);
-        //   let opened_menu = this.$refs.mymenu.openedMenus;
-        //   if(indexPath.length === 1){
-        //     for(let i of opened_menu){
-        //         this.$refs.mymenu.close(i);
-        //     }
-        //   }
-        //   this.opened_menu = index;
-        // console.log(index,indexPath,'????')
-        // console.log(this.$refs.mymenu.openedMenus,'sel');
-        // this.default_active = null;
+        //只有一级的，如首页，点击后关闭原有打开
+        if(indexPath.length === 1){
+            for(let i of this.opened_menu){
+                // console.log(i);
+                this.$refs.mymenu.close(i);
+            }
+        }
+        
+        this.opened_menu = [...this.$refs.mymenu.openedMenus];
       },
 
       //折叠导航栏
       collapse: function () {
-        this.collapsed = !this.collapsed;
-        this.handleOpen();
+        if(this.collapsed){
+            for(let i of this.opened_menu){
+            // console.log(i);
+            this.$refs.mymenu.open(i);
+            }
+            this.collapsed = !this.collapsed;
+        }else{
+            for(let i of this.opened_menu){
+            // console.log(i);
+            this.$refs.mymenu.close(i);
+            }
+            setTimeout(() => {
+            this.collapsed = !this.collapsed;
+            },300);
+        }
+        // console.log(this.opened_menu)
+        // for(let i of this.opened_menu){
+        //     // console.log(i);
+        //     this.$refs.mymenu.open(i);
+        // }
+        // setTimeout(() => {
+        //     this.collapsed = !this.collapsed;
+        // },300);
+        // this.handleOpen();
       },
     //   showMenu(i, status){
     //     this.$refs.menuCollapsed.getElementsByClassName('submenu-hook-' + i)[0].style.display = status ? 'block' : 'none';
@@ -1388,21 +1421,22 @@
         });
       },
       linkTo(path){
-       if(path === 'index'){
-         this.$router.push({path: '/page/index'});
-       }else{
-         this.$router.push({path: path});
-       }
+        if(path === 'index'){
+            this.$router.push({path: '/page/index'});
+        }else{
+            this.$router.push({path: path});
+        }
 
       }
     },
     mounted() {
-      var user = sessionStorage.getItem('access-user');
-      if (user) {
-        user = JSON.parse(user);
-        this.sysUserName = user.name || '';
-      }
-
+        var user = sessionStorage.getItem('access-user');
+        if (user) {
+            user = JSON.parse(user);
+            this.sysUserName = user.name || '';
+        }
+        ////ele内部方法，获取现在已打开的index数组,一定要转数组，原数据遍历有问题
+        this.opened_menu = [...this.$refs.mymenu.openedMenus];
     }
   }
 </script>
@@ -1516,18 +1550,19 @@
 </style>
 <style>
   /* .el-menu-item {color: #ccc;} */
-  .el-submenu {color:#ccc;}
+  /* .el-submenu {color:#ccc;} */
   .el-submenu__title {color:#ccc;}
   .el-submenu__title i {color: inherit;}
   .el-submenu .el-menu {background: #324057;}
   .el-submenu .el-menu .el-menu {background: #475669;}
+
   .el-submenu .el-menu-item:hover, .el-submenu__title:hover,
   .el-menu--horizontal.el-menu--dark .el-submenu .el-menu-item.is-active,
   .el-menu-item.is-active,
-  .menu-collapsed .el-submenu.is-active
-  {background-color: #00C1DE;color: #1F2D3D;}
+  .menu-collapsed .el-submenu.is-active, /*关闭时*/
+  .menu-expanded .el-submenu.is-active:not(.is-opened)>.el-submenu__title /*选中，但是没打开的父级*/
+  {background: #00C1DE;color: #1F2D3D;}
   .menu-collapsed .el-submenu.is-active>.el-submenu__title {color: inherit;}
-   /* .menu-collapsed .el-submenu.is-active i {color:#1F2D3D;} */
   .el-submenu span {padding-right: 12px;}
   /* .menu-collapsed .el-submenu__icon-arrow {display: none;} */
   .menu-collapsed .first {display: none;} /* 折叠导航时，文字先消失 */
