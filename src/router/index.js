@@ -50,6 +50,14 @@ let router = new Router({
     },
     {
       path: '/',
+      name: '首页',
+      component: Home,
+      children: [
+        {path: '/page/activitycenter/activitySaleList', component: myList}
+      ]
+    },
+    {
+      path: '/',
       component: Home,
       name: '用户管理',
       menuShow: true,

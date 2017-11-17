@@ -113,7 +113,10 @@ html,body{
 
 /******************************************************chenge ele***************************************************/
 //面包屑－default 没有点击样式
-.el-breadcrumb__item.default .el-breadcrumb__item__inner, .el-breadcrumb__item__inner a {
-  color: #97a8be;
+.el-breadcrumb__item .el-breadcrumb__separator {font-weight: normal;}
+.el-breadcrumb__item.default .el-breadcrumb__inner {
+  color: #5a5e66;
   cursor: text;
+  font-weight: normal;
+  &:hover {color: #5a5e66;}
 }
